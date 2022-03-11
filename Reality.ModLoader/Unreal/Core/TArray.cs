@@ -26,6 +26,9 @@ namespace Reality.ModLoader.Unreal.Core
             set => WriteInt32(IntPtr.Size + 4, value);
         }
 
+        public TArray()
+        { }
+
         public TArray(IntPtr baseAddress)
         {
             _baseAddress = baseAddress;
