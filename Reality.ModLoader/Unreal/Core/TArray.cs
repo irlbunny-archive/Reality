@@ -3,7 +3,7 @@ using System;
 
 namespace Reality.ModLoader.Unreal.Core
 {
-    public class TArray<T> : MemoryObject, IDisposable where T : MemoryObject, new()
+    public class TArray<T> : MemoryObject where T : MemoryObject, new()
     {
         private bool _isPtr = true;
         private int _elementSize = IntPtr.Size;
@@ -24,11 +24,6 @@ namespace Reality.ModLoader.Unreal.Core
         {
             get => ReadInt32(IntPtr.Size + 4);
             set => WriteInt32(IntPtr.Size + 4, value);
-        }
-
-        public TArray()
-        {
-            _baseAddress = FMemory.Malloc(ObjectSize, 0);
         }
 
         public TArray(IntPtr baseAddress)
@@ -66,20 +61,6 @@ namespace Reality.ModLoader.Unreal.Core
             Data = FMemory.Realloc(Data, _elementSize * (Count + 1), 0);
             SetElement(Count++, item);
             Max = Count;
-        }
-
-        public void Dispose()
-        {
-            if (Data != IntPtr.Zero)
-                FMemory.Free(Data);
-            if (_baseAddress != IntPtr.Zero)
-                FMemory.Free(_baseAddress);
-        }
-
-        public override void OnBaseAddressChanged(IntPtr baseAddress)
-        {
-            if (_baseAddress != IntPtr.Zero)
-                FMemory.Free(_baseAddress);
         }
 
         public override int ObjectSize => _elementSize + 8;

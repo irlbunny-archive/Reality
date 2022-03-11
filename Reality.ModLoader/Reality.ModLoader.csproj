@@ -61,6 +61,7 @@
     <Compile Include="Unreal\Core\FName.cs" />
     <Compile Include="Unreal\Core\FString.cs" />
     <Compile Include="Unreal\Core\TArray.cs" />
+    <Compile Include="Unreal\UMemoryObject.cs" />
     <Compile Include="Utilities\Logger.cs" />
     <Compile Include="Utilities\MinHook.cs" />
     <Compile Include="Utilities\Win32.cs" />

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Reality.ModLoader.Unreal.Core
 {
-    public class FString : MemoryObject, IDisposable
+    public class FString : UMemoryObject
     {
         public IntPtr Data
         {
@@ -44,9 +44,8 @@ namespace Reality.ModLoader.Unreal.Core
         }
 
         public FString()
-        {
-            _baseAddress = FMemory.Malloc(ObjectSize, 0);
-        }
+            : base()
+        { }
 
         public FString(IntPtr baseAddress)
         {
@@ -54,23 +53,17 @@ namespace Reality.ModLoader.Unreal.Core
         }
 
         public FString(string value)
-            : this()
+            : base()
         {
             Value = value;
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
-            //if (Data != IntPtr.Zero)
-            //    FMemory.Free(Data);
-            //if (_baseAddress != IntPtr.Zero)
-            //    FMemory.Free(_baseAddress);
-        }
+            if (Data != IntPtr.Zero)
+                FMemory.Free(Data);
 
-        public override void OnBaseAddressChanged(IntPtr baseAddress)
-        {
-            //if (_baseAddress != IntPtr.Zero)
-            //    FMemory.Free(_baseAddress);
+            base.Dispose();
         }
 
         public override int ObjectSize => IntPtr.Size + 8;
