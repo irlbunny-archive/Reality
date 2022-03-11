@@ -7,6 +7,7 @@ namespace Reality.ModLoader.Stores
 {
     public abstract class ObjectStore : MemoryObject
     {
+        private static Dictionary<string, UObject> _cachedObjects = new();
         private static Dictionary<string, int> _cachedOffsets = new();
 
         public abstract int Count { get; }
@@ -26,23 +27,37 @@ namespace Reality.ModLoader.Stores
 
         public UObject this[int index] => GetObject<UObject>(index);
 
-        public T FindObject<T>(string fullName, bool withClass = true) where T : UObject, new()
+        public T FindObject<T>(string fullName, bool withClass = true, bool withCache = true) where T : UObject, new()
         {
-            for (var i = 0; i < Count; i++)
+            UObject FindObjectInternal()
             {
-                var obj = GetObject<T>(i);
-                if (obj != null)
+                for (var i = 0; i < Count; i++)
                 {
-                    if (obj.GetFullName(withClass) == fullName)
-                        return obj;
+                    var obj = GetObject<T>(i);
+                    if (obj != null)
+                    {
+                        if (obj.GetFullName(withClass) == fullName)
+                            return obj;
+                    }
                 }
+
+                return null;
             }
 
-            return null;
+            UObject obj;
+            if (withCache && !_cachedObjects.TryGetValue(fullName, out obj))
+            {
+                _cachedObjects[fullName] = FindObjectInternal();
+                obj = _cachedObjects[fullName];
+            }
+            else
+                obj = FindObjectInternal();
+
+            return obj.Cast<T>();
         }
 
-        public UObject FindObject(string fullName, bool withClass = true)
-            => FindObject<UObject>(fullName, withClass);
+        public UObject FindObject(string fullName, bool withClass = true, bool withCache = true)
+            => FindObject<UObject>(fullName, withClass, withCache);
 
         public int FindProperty(string fullName, bool withClass = true)
         {

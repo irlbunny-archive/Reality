@@ -7,7 +7,13 @@ namespace Reality.ModLoader.Unreal.Core
 {
     public class FName : MemoryObject
     {
-        private static Dictionary<int, string> _cachedValues = new();
+        /*private struct CachedName
+        {
+            public int Number;
+            public string Value;
+        }
+
+        private static Dictionary<int, CachedName> _cachedNames = new();*/
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate void FNameToStringDelegate(IntPtr thisPtr, IntPtr value);
@@ -20,17 +26,25 @@ namespace Reality.ModLoader.Unreal.Core
         {
             get
             {
-                if (!_cachedValues.TryGetValue(ComparisonIndex, out var value))
-                {
+                //void Cache(CachedName cachedName)
+                //{
                     var str = new FString();
                     ToString_(BaseAddress, str.BaseAddress);
-                    value = str.Value;
+                    //cachedName.Number = Number;
+                    //cachedName.Value = str.Value;
+                    var value = str.Value;
                     str.Dispose();
 
-                    _cachedValues[ComparisonIndex] = value;
-                }
+                    //_cachedNames[ComparisonIndex] = cachedName;
+                //}
 
-                return value;
+                //if (!_cachedNames.TryGetValue(ComparisonIndex, out var cachedName))
+                //    Cache(cachedName);
+
+                //if (cachedName.Number != Number)
+                //    Cache(cachedName);
+
+                return /*cachedName.Value*/value;
             }
         }
 

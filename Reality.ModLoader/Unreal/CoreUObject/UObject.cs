@@ -119,9 +119,10 @@ namespace Reality.ModLoader.Unreal.CoreUObject
         /// <typeparam name="T">A type which inherits UObject.</typeparam>
         /// <param name="fullName">The full name of an object.</param>
         /// <param name="withClass">Should we include the class name when finding an object? (Default: true)</param>
+        /// <param name="withCache">Should we cache the resulting UObject? (Default: true)</param>
         /// <returns>If found, a UObject. Otherwise, "null" will be returned.</returns>
-        public T FindObject<T>(string fullName, bool withClass = true) where T : UObject, new()
-            => Objects.FindObject<T>(fullName, withClass);
+        public T FindObject<T>(string fullName, bool withClass = true, bool withCache = true) where T : UObject, new()
+            => Objects.FindObject<T>(fullName, withClass, withCache);
 
         /// <summary>
         /// Lets you find any global object and caches the object.
@@ -129,9 +130,10 @@ namespace Reality.ModLoader.Unreal.CoreUObject
         /// </summary>
         /// <param name="fullName">The full name of an object.</param>
         /// <param name="withClass">Should we include the class name when finding an object? (Default: true)</param>
+        /// <param name="withCache">Should we cache the resulting UObject? (Default: true)</param>
         /// <returns>If found, a UObject. Otherwise, "null" will be returned.</returns>
-        public UObject FindObject(string fullName, bool withClass = true)
-            => Objects.FindObject(fullName, withClass);
+        public UObject FindObject(string fullName, bool withClass = true, bool withCache = true)
+            => Objects.FindObject(fullName, withClass, withCache);
 
         /// <summary>
         /// A specialized method to find a property and caches the offset.
