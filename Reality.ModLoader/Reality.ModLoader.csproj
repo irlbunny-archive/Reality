@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4956FB48-7117-408B-992B-574B4BE48CD9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Reality.ModLoader</RootNamespace>
+    <AssemblyName>Reality.ModLoader</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <LangVersion>9.0</LangVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Loader.cs" />
+    <Compile Include="Bootstrap.cs" />
+    <Compile Include="Memory\IMemory.cs" />
+    <Compile Include="Memory\InternalMemory.cs" />
+    <Compile Include="Memory\MemoryObject.cs" />
+    <Compile Include="Memory\MemoryUtil.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\ResourceUtil.cs" />
+    <Compile Include="Stores\DelegateStore.cs" />
+    <Compile Include="Stores\FixedObjectStore.cs" />
+    <Compile Include="Stores\ObjectStore.cs" />
+    <Compile Include="Unreal\CoreUObject\UClass.cs" />
+    <Compile Include="Unreal\CoreUObject\UField.cs" />
+    <Compile Include="Unreal\CoreUObject\UObject.cs" />
+    <Compile Include="Unreal\CoreUObject\UProperty.cs" />
+    <Compile Include="Unreal\CoreUObject\UStruct.cs" />
+    <Compile Include="Common\IBasePlugin.cs" />
+    <Compile Include="Common\IGamePlugin.cs" />
+    <Compile Include="Common\ILoaderPlugin.cs" />
+    <Compile Include="Unreal\Core\FMemory.cs" />
+    <Compile Include="Unreal\Core\FName.cs" />
+    <Compile Include="Unreal\Core\FString.cs" />
+    <Compile Include="Unreal\Core\TArray.cs" />
+    <Compile Include="Utilities\Logger.cs" />
+    <Compile Include="Utilities\MinHook.cs" />
+    <Compile Include="Utilities\Win32.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\MinHook.x64.dll" />
+    <EmbeddedResource Include="Resources\MinHook.x86.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
