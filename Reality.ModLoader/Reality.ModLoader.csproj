@@ -49,6 +49,8 @@
     <Compile Include="Stores\DelegateStore.cs" />
     <Compile Include="Stores\FixedObjectStore.cs" />
     <Compile Include="Stores\ObjectStore.cs" />
+    <Compile Include="Unreal\CoreUObject\FVector.cs" />
+    <Compile Include="Unreal\CoreUObject\FRotator.cs" />
     <Compile Include="Unreal\CoreUObject\UClass.cs" />
     <Compile Include="Unreal\CoreUObject\UField.cs" />
     <Compile Include="Unreal\CoreUObject\UObject.cs" />
