@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace Reality.ModLoader.Memory
 {
@@ -11,9 +10,6 @@ namespace Reality.ModLoader.Memory
     /// </summary>
     public interface IMemory
     {
-        Process Process { get; set; }
-        IntPtr BaseAddress { get; set; }
-
         byte[] ReadBytes(IntPtr address, int offset, int length);
 
         sbyte ReadInt8(IntPtr address, int offset);

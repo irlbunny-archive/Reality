@@ -1,20 +1,11 @@
 ﻿using Reality.ModLoader.Memory;
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace Reality.ModLoader.Unreal.Core
 {
     public class FName : MemoryObject
     {
-        /*private struct CachedName
-        {
-            public int Number;
-            public string Value;
-        }
-
-        private static Dictionary<int, CachedName> _cachedNames = new();*/
-
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate void FNameToStringDelegate(IntPtr thisPtr, IntPtr value);
         public static FNameToStringDelegate ToString_;
@@ -26,25 +17,9 @@ namespace Reality.ModLoader.Unreal.Core
         {
             get
             {
-                //void Cache(CachedName cachedName)
-                //{
-                    var str = new FString();
-                    ToString_(BaseAddress, str.BaseAddress);
-                    //cachedName.Number = Number;
-                    //cachedName.Value = str.Value;
-                    var value = str.Value;
-                    str.Dispose();
-
-                    //_cachedNames[ComparisonIndex] = cachedName;
-                //}
-
-                //if (!_cachedNames.TryGetValue(ComparisonIndex, out var cachedName))
-                //    Cache(cachedName);
-
-                //if (cachedName.Number != Number)
-                //    Cache(cachedName);
-
-                return /*cachedName.Value*/value;
+                var _string = new FString();
+                ToString_(BaseAddress, _string.BaseAddress);
+                return _string.Value;
             }
         }
 

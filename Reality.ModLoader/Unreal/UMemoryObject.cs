@@ -4,23 +4,26 @@ using System;
 
 namespace Reality.ModLoader.Unreal
 {
-    public abstract class UMemoryObject : MemoryObject, IDisposable
+    /// <summary>
+    /// This just handles allocating a block of memory (depending on ObjectSize) upon the constructor being called.
+    /// If the BaseAddress is changed externally, then it will free our self-allocated block of memory.
+    /// </summary>
+    public abstract class UMemoryObject : MemoryObject
     {
+        private bool _isSelfAllocated;
+
         public UMemoryObject()
         {
             _baseAddress = FMemory.Malloc(ObjectSize, 0);
-        }
-
-        public virtual void Dispose()
-        {
-            if (_baseAddress != IntPtr.Zero)
-                FMemory.Free(_baseAddress);
+            _isSelfAllocated = true;
         }
 
         public override void OnBaseAddressChanged(IntPtr baseAddress)
         {
-            if (_baseAddress != IntPtr.Zero)
+            if (_isSelfAllocated && _baseAddress != IntPtr.Zero)
                 FMemory.Free(_baseAddress);
+
+            _isSelfAllocated = false;
         }
     }
 }

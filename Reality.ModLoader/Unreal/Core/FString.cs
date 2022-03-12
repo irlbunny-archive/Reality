@@ -1,5 +1,4 @@
-﻿using Reality.ModLoader.Memory;
-using System;
+﻿using System;
 using System.Text;
 
 namespace Reality.ModLoader.Unreal.Core
@@ -56,14 +55,6 @@ namespace Reality.ModLoader.Unreal.Core
             : base()
         {
             Value = value;
-        }
-
-        public override void Dispose()
-        {
-            if (Data != IntPtr.Zero)
-                FMemory.Free(Data);
-
-            base.Dispose();
         }
 
         public override int ObjectSize => IntPtr.Size + 8;
