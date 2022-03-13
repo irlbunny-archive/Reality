@@ -1,13 +1,9 @@
-﻿using Reality.ModLoader.Common;
-using Reality.ModLoader.Memory;
+﻿using Reality.ModLoader.Memory;
 using Reality.ModLoader.Stores;
 using Reality.ModLoader.Unreal.CoreUObject;
 using Reality.ModLoader.Utilities;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace Reality.ModLoader
@@ -23,11 +19,7 @@ namespace Reality.ModLoader
         public static string LogsPath => Path.Combine(DataPath, "Logs");
 
         public IMemory Memory { get; private set; }
-
         public ObjectStore Objects { get; private set; }
-
-        private static List<ILoaderPlugin> _loaderPlugins = new();
-        private static List<IGamePlugin> _gamePlugins = new();
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate void ProcessEventDelegate(IntPtr thisPtr, IntPtr func, IntPtr parms);
@@ -41,7 +33,7 @@ namespace Reality.ModLoader
                 var thisObj = (UObject) thisPtr;
                 var funcObj = (UObject) func;
 
-                foreach (var gamePlugin in _gamePlugins)
+                foreach (var gamePlugin in PluginManager._gamePlugins)
                 {
                     if (!gamePlugin.OnProcessEvent(thisObj, funcObj, parms))
                     {
@@ -67,40 +59,13 @@ namespace Reality.ModLoader
 
             Memory = new InternalMemory();
 
+            PluginManager.LoadAll();
+
             var objectsOffset = MemoryUtil.FindPattern(
                 "\x48\x8D\x0D\x00\x00\x00\x00\xE8\x00\x00\x00\x00\xE8\x00\x00\x00\x00\xE8\x00\x00\x00\x00\x48\x8B\xD6",
                 "xxx????x????x????x????xxx"
             );
             Objects = new FixedObjectStore(MemoryUtil.GetAddressFromOffset(objectsOffset, 7, 3));
-
-            // Load plugins from directory.
-            var assemblyFiles = Directory.GetFiles(PluginsPath, "*.dll", SearchOption.TopDirectoryOnly);
-            foreach (var assemblyFile in assemblyFiles)
-            {
-                Logger.Info($"Loading \"{assemblyFile}\"...");
-
-                var assembly = Assembly.LoadFrom(assemblyFile);
-                var loaderPlugins = assembly.GetTypes().Where(x => typeof(ILoaderPlugin).IsAssignableFrom(x) && !x.IsInterface);
-                foreach (var loaderPlugin in loaderPlugins)
-                {
-                    var instance = (ILoaderPlugin) Activator.CreateInstance(loaderPlugin);
-
-                    _loaderPlugins.Add(instance);
-
-                    Logger.Info($"Loaded ILoaderPlugin from \"{assemblyFile}\"!");
-                }
-
-                var gamePlugins = assembly.GetTypes().Where(x => typeof(IGamePlugin).IsAssignableFrom(x) && !x.IsInterface);
-                foreach (var gamePlugin in gamePlugins)
-                {
-                    var instance = (IGamePlugin) Activator.CreateInstance(gamePlugin);
-                    instance.OnLoad();
-
-                    _gamePlugins.Add(instance);
-
-                    Logger.Info($"Loaded IGamePlugin from \"{assemblyFile}\"!");
-                }
-            }
 
             Logger.Info("Applying ProcessEvent hook...");
 

@@ -58,9 +58,9 @@
     <Compile Include="Unreal\CoreUObject\UObject.cs" />
     <Compile Include="Unreal\CoreUObject\UProperty.cs" />
     <Compile Include="Unreal\CoreUObject\UStruct.cs" />
-    <Compile Include="Common\IBasePlugin.cs" />
-    <Compile Include="Common\IGamePlugin.cs" />
-    <Compile Include="Common\ILoaderPlugin.cs" />
+    <Compile Include="Common\BasePlugin.cs" />
+    <Compile Include="Common\GamePlugin.cs" />
+    <Compile Include="Common\LoaderPlugin.cs" />
     <Compile Include="Unreal\Core\FMemory.cs" />
     <Compile Include="Unreal\Core\FName.cs" />
     <Compile Include="Unreal\Core\FString.cs" />
