@@ -39,7 +39,7 @@ namespace Reality.ModLoader
                     else if (plugin is GamePlugin gamePlugin)
                         _gamePlugins.Add(gamePlugin);
 
-                    Logger.Info($"Loaded plugin: \"{plugin.Name}\" ({plugin.Version}) by \"{plugin.Author}\"");
+                    Logger.Info($"Loaded plugin: \"{plugin.Name}\" (v{plugin.Version}) by \"{plugin.Author}\"");
                 }
             }
         }

@@ -3,7 +3,9 @@ using Reality.ModLoader.Stores;
 using Reality.ModLoader.Unreal.CoreUObject;
 using Reality.ModLoader.Utilities;
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace Reality.ModLoader
@@ -12,6 +14,8 @@ namespace Reality.ModLoader
     {
         private static Loader _instance;
         public static Loader Instance => _instance ?? (_instance = new());
+
+        public static string Version => $"v{FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion}";
 
         public static string DataPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Reality");
         public static string ResourcesPath => Path.Combine(DataPath, "Resources");
@@ -56,6 +60,8 @@ namespace Reality.ModLoader
             Directory.CreateDirectory(LogsPath);
 
             Logger.FilePath = Path.Combine(LogsPath, $"{DateTime.Now:MM-dd-yyyy_HH-mm-ss}.txt");
+            Logger.Info($"Reality ({Version}), made with <3 by Kaitlyn.");
+            Logger.Info($"Consider supporting me on Patreon! https://www.patreon.com/join/ItsKaitlyn03");
 
             Memory = new InternalMemory();
 
