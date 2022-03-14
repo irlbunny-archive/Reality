@@ -10,6 +10,7 @@ namespace Reality.ModLoader.Common
         public IMemory Memory => Loader.Instance.Memory;
         public ObjectStore Objects => Loader.Instance.Objects;
 
-        public abstract bool OnProcessEvent(UObject obj, UObject func, IntPtr parms);
+        public virtual bool OnProcessEvent(UObject obj, UObject func, IntPtr parms)
+            => true;
     }
 }
