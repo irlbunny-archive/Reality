@@ -10,8 +10,8 @@ namespace Reality.ModLoader
 {
     public static class PluginManager
     {
-        internal static List<LoaderPlugin> _loaderPlugins = new();
-        internal static List<GamePlugin> _gamePlugins = new();
+        public static LoaderPlugin LoaderPlugin;
+        public static List<GamePlugin> GamePlugins = new();
 
         /// <summary>
         /// Checks if a game plugin is installed by name.
@@ -19,7 +19,7 @@ namespace Reality.ModLoader
         /// <param name="name">The game plugin name.</param>
         /// <returns>If it's installed, true. Otherwise, false.</returns>
         public static bool IsInstalled(string name)
-            => _gamePlugins.Any(x => x.Name == name);
+            => GamePlugins.Any(x => x.Name == name);
 
         internal static void LoadAll()
         {
@@ -34,10 +34,10 @@ namespace Reality.ModLoader
                 foreach (var pluginType in pluginTypes)
                 {
                     var plugin = (BasePlugin) Activator.CreateInstance(pluginType);
-                    if (plugin is LoaderPlugin loaderPlugin)
-                        _loaderPlugins.Add(loaderPlugin);
+                    if (LoaderPlugin == null && plugin is LoaderPlugin loaderPlugin)
+                        LoaderPlugin = loaderPlugin;
                     else if (plugin is GamePlugin gamePlugin)
-                        _gamePlugins.Add(gamePlugin);
+                        GamePlugins.Add(gamePlugin);
 
                     Logger.Info($"Loaded plugin: \"{plugin.Name}\" (v{plugin.Version}) by \"{plugin.Author}\"");
                 }

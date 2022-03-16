@@ -37,7 +37,7 @@ namespace Reality.ModLoader
                 var thisObj = (UObject) thisPtr;
                 var funcObj = (UObject) func;
 
-                foreach (var gamePlugin in PluginManager._gamePlugins)
+                foreach (var gamePlugin in PluginManager.GamePlugins)
                 {
                     if (!gamePlugin.OnProcessEvent(thisObj, funcObj, parms))
                     {
