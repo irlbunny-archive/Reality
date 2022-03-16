@@ -67,6 +67,13 @@ namespace Reality.ModLoader
 
             PluginManager.LoadAll();
 
+            if (PluginManager.LoaderPlugin == null)
+            {
+                Logger.Info("No loader plugin was found, Reality cannot function without a loader plugin.");
+                Logger.Info("Consider making your own loader plugin, or find one that's compatible with your game.");
+                return;
+            }
+
             Objects = new FixedObjectStore(PluginManager.LoaderPlugin.GetData<IntPtr>("OBJECT_STORE_ADDRESS"));
 
             Logger.Info("Applying ProcessEvent hook...");
