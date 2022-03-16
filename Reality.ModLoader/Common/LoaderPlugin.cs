@@ -6,9 +6,17 @@ namespace Reality.ModLoader.Common
     public abstract class LoaderPlugin : BasePlugin
     {
         public abstract Dictionary<string, Func<object>> Data { get; }
-        
-        // TODO(Kaitlyn): Implement caching.
+        private Dictionary<string, object> _cachedData = new();
+
         public T GetData<T>(string key)
-            => (T) Data[key]();
+        {
+            if (!_cachedData.TryGetValue(key, out var data))
+            {
+                data = Data[key]();
+                _cachedData[key] = data;
+            }
+
+            return (T) data;
+        }
     }
 }

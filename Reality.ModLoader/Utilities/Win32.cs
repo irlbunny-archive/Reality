@@ -29,6 +29,12 @@ namespace Reality.ModLoader.Utilities
         [DllImport("kernel32", CharSet = CharSet.Ansi, ExactSpelling = true, SetLastError = true)]
         public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
 
+        public static T GetExport<T>(IntPtr handle, string name) where T : class
+        {
+            var ptr = GetProcAddress(handle, name);
+            return ptr != IntPtr.Zero ? Marshal.GetDelegateForFunctionPointer<T>(ptr) : null;
+        }
+
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern IntPtr GetCurrentProcess();
 
@@ -49,14 +55,5 @@ namespace Reality.ModLoader.Utilities
 
         [DllImport("kernel32.dll", EntryPoint = "RtlFillMemory", SetLastError = false)]
         public static extern void RtlFillMemory(IntPtr destination, uint length, byte fill);
-
-        [DllImport("user32.dll")]
-        public static extern short GetAsyncKeyState(Keys vKey);
-
-        public static T GetExport<T>(IntPtr handle, string name) where T : class
-        {
-            var ptr = GetProcAddress(handle, name);
-            return ptr != IntPtr.Zero ? Marshal.GetDelegateForFunctionPointer<T>(ptr) : null;
-        }
     }
 }
