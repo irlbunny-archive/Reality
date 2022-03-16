@@ -5,9 +5,10 @@ namespace Reality.ModLoader.Common
 {
     public abstract class LoaderPlugin : BasePlugin
     {
-        public abstract Dictionary<string, Func<object>> Grabbers { get; }
+        public abstract Dictionary<string, Func<object>> Data { get; }
         
-        public T Grab<T>(string key)
-            => (T) Grabbers[key]();
+        // TODO(Kaitlyn): Implement caching.
+        public T GetData<T>(string key)
+            => (T) Data[key]();
     }
 }

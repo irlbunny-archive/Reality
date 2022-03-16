@@ -25,7 +25,7 @@ namespace Reality.ModLoader.Unreal.Core
 
         static FName()
         {
-            ToString_ = PluginManager.LoaderPlugin.Grab<FNameToStringDelegate>("FNAME_TOSTRING_DELEGATE");
+            ToString_ = PluginManager.LoaderPlugin.GetData<FNameToStringDelegate>("FNAME_TOSTRING_DELEGATE");
         }
 
         public override int ObjectSize => 8;

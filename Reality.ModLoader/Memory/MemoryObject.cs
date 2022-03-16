@@ -21,8 +21,8 @@ namespace Reality.ModLoader.Memory
             }
         }
 
-        public T Grab<T>(string key)
-            => PluginManager.LoaderPlugin.Grab<T>(key);
+        public T GetData<T>(string key)
+            => PluginManager.LoaderPlugin.GetData<T>(key);
 
         public byte[] ReadBytes(int offset, int length)
             => Memory.ReadBytes(BaseAddress, offset, length);

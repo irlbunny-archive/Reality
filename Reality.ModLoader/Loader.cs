@@ -67,11 +67,11 @@ namespace Reality.ModLoader
 
             PluginManager.LoadAll();
 
-            Objects = new FixedObjectStore(PluginManager.LoaderPlugin.Grab<IntPtr>("OBJECT_STORE_ADDRESS"));
+            Objects = new FixedObjectStore(PluginManager.LoaderPlugin.GetData<IntPtr>("OBJECT_STORE_ADDRESS"));
 
             Logger.Info("Applying ProcessEvent hook...");
 
-            MinHook.CreateHook(PluginManager.LoaderPlugin.Grab<IntPtr>("PROCESSEVENT_ADDRESS"), ProcessEventHook, out ProcessEvent);
+            MinHook.CreateHook(PluginManager.LoaderPlugin.GetData<IntPtr>("PROCESS_EVENT_ADDRESS"), ProcessEventHook, out ProcessEvent);
             MinHook.EnableAllHooks();
         }
     }

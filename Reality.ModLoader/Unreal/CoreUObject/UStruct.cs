@@ -2,6 +2,6 @@
 {
     public class UStruct : UField
     {
-        public UStruct SuperField => ReadStruct<UStruct>(Grab<int>("USTRUCT_SUPERFIELD_VALUE"));
+        public UStruct SuperField => ReadStruct<UStruct>(GetData<int>("USTRUCT_SUPERFIELD_VALUE"));
     }
 }

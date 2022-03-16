@@ -19,9 +19,9 @@ namespace Reality.ModLoader.Unreal.Core
 
         static FMemory()
         {
-            Malloc = PluginManager.LoaderPlugin.Grab<FMemoryMallocDelegate>("FMEMORY_MALLOC_DELEGATE");
-            Realloc = PluginManager.LoaderPlugin.Grab<FMemoryReallocDelegate>("FMEMORY_REALLOC_DELEGATE");
-            Free = PluginManager.LoaderPlugin.Grab<FMemoryFreeDelegate>("FMEMORY_FREE_DELEGATE");
+            Malloc = PluginManager.LoaderPlugin.GetData<FMemoryMallocDelegate>("FMEMORY_MALLOC_DELEGATE");
+            Realloc = PluginManager.LoaderPlugin.GetData<FMemoryReallocDelegate>("FMEMORY_REALLOC_DELEGATE");
+            Free = PluginManager.LoaderPlugin.GetData<FMemoryFreeDelegate>("FMEMORY_FREE_DELEGATE");
         }
     }
 }
