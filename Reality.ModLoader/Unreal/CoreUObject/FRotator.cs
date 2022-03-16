@@ -1,5 +1,8 @@
 ﻿namespace Reality.ModLoader.Unreal.CoreUObject
 {
+    /// <summary>
+    /// Contains rotation data, offsets should usually never change here.
+    /// </summary>
     public class FRotator : UMemoryObject
     {
         public float Pitch

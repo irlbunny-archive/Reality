@@ -3,6 +3,9 @@ using System.Text;
 
 namespace Reality.ModLoader.Unreal.Core
 {
+    /// <summary>
+    /// Represents a string in Unreal Engine, offsets should usually never change here.
+    /// </summary>
     public class FString : UMemoryObject
     {
         public IntPtr Data

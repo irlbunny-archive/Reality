@@ -3,6 +3,10 @@ using System;
 
 namespace Reality.ModLoader.Unreal.Core
 {
+    /// <summary>
+    /// Represents an array in Unreal Engine, offsets should usually never change here.
+    /// </summary>
+    /// <typeparam name="T">A type which inherits MemoryObject.</typeparam>
     public class TArray<T> : MemoryObject where T : MemoryObject, new()
     {
         private bool _isPtr = true;

@@ -67,19 +67,11 @@ namespace Reality.ModLoader
 
             PluginManager.LoadAll();
 
-            var objectsOffset = MemoryUtil.FindPattern(
-                "\x48\x8D\x0D\x00\x00\x00\x00\xE8\x00\x00\x00\x00\xE8\x00\x00\x00\x00\xE8\x00\x00\x00\x00\x48\x8B\xD6",
-                "xxx????x????x????x????xxx"
-            );
-            Objects = new FixedObjectStore(MemoryUtil.GetAddressFromOffset(objectsOffset, 7, 3));
+            Objects = new FixedObjectStore(PluginManager.LoaderPlugin.Grab<IntPtr>("OBJECT_STORE_ADDRESS"));
 
             Logger.Info("Applying ProcessEvent hook...");
 
-            var processEventAddress = MemoryUtil.FindPattern(
-                "\x40\x55\x56\x57\x41\x54\x41\x55\x41\x56\x41\x57\x48\x81\xEC\x00\x00\x00\x00\x48\x8D\x6C\x24\x00\x48\x89\x9D\x00\x00\x00\x00\x48\x8B\x05\x00\x00\x00\x00\x48\x33\xC5\x48\x89\x85\x00\x00\x00\x00\x48\x63\x41\x0C",
-                "xxxxxxxxxxxxxxx????xxxx?xxx????xxx????xxxxxx????xxxx"
-            );
-            MinHook.CreateHook(processEventAddress, ProcessEventHook, out ProcessEvent);
+            MinHook.CreateHook(PluginManager.LoaderPlugin.Grab<IntPtr>("PROCESSEVENT_ADDRESS"), ProcessEventHook, out ProcessEvent);
             MinHook.EnableAllHooks();
         }
     }

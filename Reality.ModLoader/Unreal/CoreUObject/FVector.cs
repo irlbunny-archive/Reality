@@ -1,5 +1,8 @@
 ﻿namespace Reality.ModLoader.Unreal.CoreUObject
 {
+    /// <summary>
+    /// Contains vector data, offsets should usually never change here.
+    /// </summary>
     public class FVector : UMemoryObject
     {
         public float X
