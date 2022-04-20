@@ -6,7 +6,7 @@ using System;
 namespace Reality.ModLoader.Unreal.CoreUObject
 {
     /// <summary>
-    /// Represents an object in Unreal Engine, offsets should usually not change here.
+    /// Represents an object in UE4, offsets should usually not change here.
     /// </summary>
     public class UObject : MemoryObject
     {

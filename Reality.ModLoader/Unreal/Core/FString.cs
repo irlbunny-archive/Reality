@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Reality.ModLoader.Memory;
+using System;
 using System.Text;
 
 namespace Reality.ModLoader.Unreal.Core
 {
     /// <summary>
-    /// Represents a string in Unreal Engine, offsets should usually never change here.
+    /// Represents a string in UE4, offsets should usually never change here.
     /// </summary>
-    public class FString : UMemoryObject
+    public class FString : MemoryStruct
     {
         public IntPtr Data
         {
@@ -39,7 +40,7 @@ namespace Reality.ModLoader.Unreal.Core
                     FMemory.Free(Data);
 
                 var buffer = Encoding.Unicode.GetBytes(value + '\0');
-                Data = FMemory.Malloc(buffer.Length, 0);
+                Data = FMemory.MallocZero(buffer.Length);
                 Memory.WriteBytes(Data, 0, buffer);
                 Count = Max = value.Length + 1;
             }

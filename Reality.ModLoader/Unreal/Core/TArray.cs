@@ -4,7 +4,7 @@ using System;
 namespace Reality.ModLoader.Unreal.Core
 {
     /// <summary>
-    /// Represents an array in Unreal Engine, offsets should usually never change here.
+    /// Represents an array in UE4, offsets should usually never change here.
     /// </summary>
     /// <typeparam name="T">A type which inherits MemoryObject.</typeparam>
     public class TArray<T> : MemoryObject where T : MemoryObject, new()
@@ -55,7 +55,7 @@ namespace Reality.ModLoader.Unreal.Core
             => new() { BaseAddress = _isPtr ? Memory.ReadIntPtr(Data, index * _elementSize) : (Data + (index * _elementSize)) };
 
         public void SetElement(int index, T value)
-            => value.WriteSelf(_isPtr ? Memory.ReadIntPtr(Data, index * _elementSize) : (Data + (index * _elementSize)), _isPtr);
+            => value.WriteStruct(_isPtr ? Memory.ReadIntPtr(Data, index * _elementSize) : (Data + (index * _elementSize)), _isPtr);
 
         public T this[int index]
         {

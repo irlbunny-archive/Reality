@@ -1,4 +1,6 @@
-﻿using Reality.ModLoader.Memory;
+﻿using Reality.ModLoader.Hooking;
+using Reality.ModLoader.Memory;
+using Reality.ModLoader.Plugins;
 using Reality.ModLoader.Stores;
 using Reality.ModLoader.Unreal.CoreUObject;
 using Reality.ModLoader.Utilities;
@@ -15,7 +17,7 @@ namespace Reality.ModLoader
         private static Loader _instance;
         public static Loader Instance => _instance ?? (_instance = new());
 
-        public static string Version => $"v{FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion}";
+        public static string Version => FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
 
         public static string DataPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Reality");
         public static string ResourcesPath => Path.Combine(DataPath, "Resources");
@@ -26,10 +28,10 @@ namespace Reality.ModLoader
         public ObjectStore Objects { get; private set; }
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void ProcessEventDelegate(IntPtr thisPtr, IntPtr func, IntPtr parms);
-        public static ProcessEventDelegate ProcessEvent;
+        public delegate void ProcessEventInternalDelegate(IntPtr thisPtr, IntPtr func, IntPtr parms);
+        public static ProcessEventInternalDelegate ProcessEventInternal;
 
-        private static void ProcessEventHook(IntPtr thisPtr, IntPtr func, IntPtr parms)
+        public static void ProcessEventInternalHook(IntPtr thisPtr, IntPtr func, IntPtr parms)
         {
             var processEvent = true;
             if (thisPtr != IntPtr.Zero && func != IntPtr.Zero)
@@ -37,9 +39,9 @@ namespace Reality.ModLoader
                 var thisObj = (UObject) thisPtr;
                 var funcObj = (UObject) func;
 
-                foreach (var gamePlugin in PluginManager.GamePlugins)
+                foreach (var plugin in PluginManager.LoadedPlugins)
                 {
-                    if (!gamePlugin.OnProcessEvent(thisObj, funcObj, parms))
+                    if (!plugin.OnProcessEvent(thisObj, funcObj, parms))
                     {
                         processEvent = false;
                         break;
@@ -48,7 +50,7 @@ namespace Reality.ModLoader
             }
 
             if (processEvent)
-                ProcessEvent(thisPtr, func, parms);
+                ProcessEventInternal(thisPtr, func, parms);
         }
 
         public void Initialize()
@@ -60,25 +62,24 @@ namespace Reality.ModLoader
             Directory.CreateDirectory(LogsPath);
 
             Logger.FilePath = Path.Combine(LogsPath, $"{DateTime.Now:MM-dd-yyyy_HH-mm-ss}.txt");
-            Logger.Info($"Reality ({Version}), made with <3 by Kaitlyn.");
+            Logger.Info($"Reality (v{Version}), made with <3 by Kaitlyn.");
             Logger.Info($"Consider supporting me on Patreon! https://www.patreon.com/join/ItsKaitlyn03");
 
             Memory = new InternalMemory();
 
             PluginManager.LoadAll();
 
-            if (PluginManager.LoaderPlugin == null)
-            {
-                Logger.Info("No loader plugin was found, Reality cannot function without a loader plugin.");
-                Logger.Info("Consider making your own loader plugin, or find one that's compatible with your game.");
-                return;
-            }
+            var objectsOffset = MemoryUtil.FindPattern(
+                "\x48\x8D\x0D\x00\x00\x00\x00\xE8\x00\x00\x00\x00\xE8\x00\x00\x00\x00\xE8\x00\x00\x00\x00\x48\x8B\xD6",
+                "xxx????x????x????x????xxx"
+            );
+            Objects = new FixedObjectStore(MemoryUtil.GetAddressFromOffset(objectsOffset, 7, 3));
 
-            Objects = new FixedObjectStore(PluginManager.LoaderPlugin.GetData<IntPtr>("OBJECT_STORE_ADDRESS"));
-
-            Logger.Info("Applying ProcessEvent hook...");
-
-            MinHook.CreateHook(PluginManager.LoaderPlugin.GetData<IntPtr>("PROCESS_EVENT_ADDRESS"), ProcessEventHook, out ProcessEvent);
+            var processEventAddress = MemoryUtil.FindPattern(
+                "\x40\x55\x56\x57\x41\x54\x41\x55\x41\x56\x41\x57\x48\x81\xEC\x00\x00\x00\x00\x48\x8D\x6C\x24\x00\x48\x89\x9D\x00\x00\x00\x00\x48\x8B\x05\x00\x00\x00\x00\x48\x33\xC5\x48\x89\x85\x00\x00\x00\x00\x48\x63\x41\x0C",
+                "xxxxxxxxxxxxxxx????xxxx?xxx????xxx????xxxxxx????xxxx"
+            );
+            MinHook.CreateHook(processEventAddress, ProcessEventInternalHook, out ProcessEventInternal);
             MinHook.EnableAllHooks();
         }
     }

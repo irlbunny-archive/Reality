@@ -21,9 +21,6 @@ namespace Reality.ModLoader.Memory
             }
         }
 
-        public T GetData<T>(string key)
-            => PluginManager.LoaderPlugin.GetData<T>(key);
-
         public byte[] ReadBytes(int offset, int length)
             => Memory.ReadBytes(BaseAddress, offset, length);
 
@@ -91,7 +88,7 @@ namespace Reality.ModLoader.Memory
         public void WriteIntPtr(int offset, IntPtr value)
             => Memory.WriteIntPtr(BaseAddress, offset, value);
 
-        public void WriteSelf(IntPtr address, bool isPtr = true)
+        public void WriteStruct(IntPtr address, bool isPtr = true)
         {
             if (isPtr)
                 Memory.WriteIntPtr(address, 0, BaseAddress);

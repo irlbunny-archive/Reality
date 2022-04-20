@@ -1,9 +1,11 @@
-﻿namespace Reality.ModLoader.Unreal.CoreUObject
+﻿using Reality.ModLoader.Memory;
+
+namespace Reality.ModLoader.Unreal.CoreUObject
 {
     /// <summary>
-    /// Contains vector data, offsets should usually never change here.
+    /// Represents vector data in UE4, offsets should usually never change here.
     /// </summary>
-    public class FVector : UMemoryObject
+    public class FVector : MemoryStruct
     {
         public float X
         {

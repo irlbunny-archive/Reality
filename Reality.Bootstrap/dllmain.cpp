@@ -2,6 +2,7 @@
 #include <metahost.h>
 #pragma comment(lib, "mscoree.lib")
 
+#include "proxy.h"
 #include "util.h"
 
 int main() {
@@ -27,6 +28,8 @@ int main() {
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved) {
     if (dwReason == DLL_PROCESS_ATTACH) {
+        InitProxy();
+
         if (CreateThread(0, 0, reinterpret_cast<LPTHREAD_START_ROUTINE>(main), 0, 0, 0)) {
             return TRUE;
         } else {

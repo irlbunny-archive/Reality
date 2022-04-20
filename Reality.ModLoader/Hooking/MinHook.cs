@@ -1,9 +1,9 @@
-﻿using Reality.ModLoader.Stores;
+﻿using Reality.ModLoader.GC;
 using System;
 using System.Runtime.InteropServices;
 using static Reality.ModLoader.Utilities.Win32;
 
-namespace Reality.ModLoader.Utilities
+namespace Reality.ModLoader.Hooking
 {
     public static class MinHook
     {
@@ -52,23 +52,23 @@ namespace Reality.ModLoader.Utilities
             MH_EnableHook = GetExport<MH_EnableHookType>(_handle, "MH_EnableHook");
 
             var status = MH_Initialize();
-            if (status is not MH_STATUS.MH_OK)
+            if (status != MH_STATUS.MH_OK)
                 throw new Exception($"Failed to initalize MinHook. Status = {status}");
         }
 
         public static MH_STATUS CreateHook<T>(IntPtr target, T detour, out T trampoline) where T : Delegate
         {
-            DelegateStore.Add(detour);
+            ObjectPool.Add(detour);
 
             var status = MH_CreateHook(target, Marshal.GetFunctionPointerForDelegate(detour), out var original);
-            if (status is not MH_STATUS.MH_OK)
+            if (status != MH_STATUS.MH_OK)
             {
                 trampoline = null;
                 return status;
             }
 
             trampoline = Marshal.GetDelegateForFunctionPointer<T>(original);
-            DelegateStore.Add(trampoline);
+            ObjectPool.Add(trampoline);
 
             return status;
         }

@@ -3,7 +3,7 @@ using Reality.ModLoader.Stores;
 using Reality.ModLoader.Unreal.CoreUObject;
 using System;
 
-namespace Reality.ModLoader.Common
+namespace Reality.ModLoader.Plugins
 {
     public abstract class GamePlugin : BasePlugin
     {

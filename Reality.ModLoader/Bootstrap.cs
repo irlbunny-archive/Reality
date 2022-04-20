@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Reality.ModLoader.Utilities;
+using System;
 using System.IO;
 using System.Reflection;
-using System.Windows.Forms;
 
 namespace Reality.ModLoader
 {
@@ -15,7 +15,7 @@ namespace Reality.ModLoader
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An exception has occured in Reality, please report this exception to the Reality developers!\n\n{ex}");
+                Logger.Error($"An exception has occured in Reality, please report this exception to the Reality developers!\n\n{ex}");
                 Environment.Exit(-1);
             }
         }

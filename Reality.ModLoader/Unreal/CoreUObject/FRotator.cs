@@ -1,9 +1,11 @@
-﻿namespace Reality.ModLoader.Unreal.CoreUObject
+﻿using Reality.ModLoader.Memory;
+
+namespace Reality.ModLoader.Unreal.CoreUObject
 {
     /// <summary>
-    /// Contains rotation data, offsets should usually never change here.
+    /// Represents rotation data in UE4, offsets should usually never change here.
     /// </summary>
-    public class FRotator : UMemoryObject
+    public class FRotator : MemoryStruct
     {
         public float Pitch
         {

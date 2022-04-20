@@ -1,4 +1,4 @@
-﻿using Reality.ModLoader.Stores;
+﻿using Reality.ModLoader.GC;
 using System;
 using System.Runtime.InteropServices;
 using static Reality.ModLoader.Utilities.Win32;
@@ -35,22 +35,22 @@ namespace Reality.ModLoader.Memory
             return IntPtr.Zero;
         }
 
-        public static T GetNativeFunc<T>(IntPtr target) where T : Delegate
+        public static T GetInternalFunc<T>(IntPtr target) where T : Delegate
         {
             var func = Marshal.GetDelegateForFunctionPointer<T>(target);
-            DelegateStore.Add(func);
+            ObjectPool.Add(func);
             return func;
         }
 
         public static IntPtr GetAddressFromOffset(IntPtr offset, int p0 = 5, int p1 = 1)
             => new(offset.ToInt64() + p0 + Loader.Instance.Memory.ReadInt32(offset, p1));
 
-        public static T GetNativeFuncWithOffset<T>(IntPtr target, int p0 = 5, int p1 = 1) where T : Delegate
-            => GetNativeFunc<T>(GetAddressFromOffset(target, p0, p1));
+        public static T GetInternalFuncWithOffset<T>(IntPtr target, int p0 = 5, int p1 = 1) where T : Delegate
+            => GetInternalFunc<T>(GetAddressFromOffset(target, p0, p1));
 
-        public static T GetNativeFuncFromPattern<T>(string pattern, string mask) where T : Delegate
-            => GetNativeFunc<T>(FindPattern(pattern, mask));
-        public static T GetNativeFuncFromPatternWithOffset<T>(string pattern, string mask, int p0 = 5, int p1 = 1) where T : Delegate
-            => GetNativeFuncWithOffset<T>(FindPattern(pattern, mask), p0, p1);
+        public static T GetInternalFuncFromPattern<T>(string pattern, string mask) where T : Delegate
+            => GetInternalFunc<T>(FindPattern(pattern, mask));
+        public static T GetInternalFuncFromPatternWithOffset<T>(string pattern, string mask, int p0 = 5, int p1 = 1) where T : Delegate
+            => GetInternalFuncWithOffset<T>(FindPattern(pattern, mask), p0, p1);
     }
 }

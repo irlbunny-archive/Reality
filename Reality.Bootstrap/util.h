@@ -34,10 +34,9 @@ public:
         if (value.empty()) {
             return std::wstring();
         }
-        int size = MultiByteToWideChar(codePage, 0, &value[0], (int)value.size(), 0, 0);
+        int size = MultiByteToWideChar(codePage, 0, &value[0], (int) value.size(), 0, 0);
         std::wstring result(size, 0);
-        MultiByteToWideChar(codePage, 0, &value[0], (int)value.size(), &result[0], size);
+        MultiByteToWideChar(codePage, 0, &value[0], (int) value.size(), &result[0], size);
         return result;
     }
 };
-
