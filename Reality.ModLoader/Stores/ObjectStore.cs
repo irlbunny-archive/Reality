@@ -55,7 +55,7 @@ namespace Reality.ModLoader.Stores
                     _cachedOffsets[fullName] = offset;
                 }
                 else
-                    return 0;
+                    return -1;
             }
 
             return offset;
@@ -64,7 +64,7 @@ namespace Reality.ModLoader.Stores
         public T FindProperty<T>(IntPtr baseAddress, string fullName, bool withClass = true, bool isPtr = true) where T : MemoryObject, new()
         {
             var offset = FindProperty(fullName, withClass);
-            if (offset == 0)
+            if (offset == -1)
                 return null;
 
             return new() { BaseAddress = isPtr ? Loader.Instance.Memory.ReadIntPtr(baseAddress, offset) : (baseAddress + offset) };
