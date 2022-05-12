@@ -8,7 +8,7 @@ namespace Reality.ModLoader.Memory
     /// </summary>
     public abstract class MemoryObject
     {
-        public IMemory Memory => Loader.Instance.Memory;
+        public IMemory Memory => Loader.Memory;
 
         protected IntPtr _baseAddress;
         public IntPtr BaseAddress

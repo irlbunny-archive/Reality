@@ -47,7 +47,6 @@
     <Compile Include="Memory\InternalMemory.cs" />
     <Compile Include="Memory\MemoryObject.cs" />
     <Compile Include="Memory\MemoryUtility.cs" />
-    <Compile Include="Plugins\PluginManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ResourceUtility.cs" />
     <Compile Include="Stores\FixedObjectStore.cs" />

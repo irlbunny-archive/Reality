@@ -15,7 +15,7 @@ namespace Reality.ModLoader.Unreal.CoreUObject
         internal delegate void ProcessEventInternalDelegate(IntPtr thisPtr, IntPtr func, IntPtr parms);
         internal static ProcessEventInternalDelegate ProcessEventInternal;
 
-        public ObjectStore Objects => Loader.Instance.Objects;
+        public ObjectStore Objects => Loader.Objects;
 
         public IntPtr VTable => ReadIntPtr(0);
         public int ObjectFlags => ReadInt32(8);

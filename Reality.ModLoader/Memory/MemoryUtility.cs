@@ -43,7 +43,7 @@ namespace Reality.ModLoader.Memory
         }
 
         public static IntPtr GetAddressFromOffset(IntPtr offset, int p0 = 5, int p1 = 1)
-            => new(offset.ToInt64() + p0 + Loader.Instance.Memory.ReadInt32(offset, p1));
+            => new(offset.ToInt64() + p0 + Loader.Memory.ReadInt32(offset, p1));
 
         public static T GetInternalFuncWithOffset<T>(IntPtr target, int p0 = 5, int p1 = 1) where T : Delegate
             => GetInternalFunc<T>(GetAddressFromOffset(target, p0, p1));

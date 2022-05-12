@@ -27,7 +27,7 @@ namespace Reality.ModLoader
             Logger.Info($"Reality (v{Version}), made with <3 by Kaitlyn.");
             Logger.Info("Consider supporting me on Patreon! https://www.patreon.com/join/ItsKaitlyn03");
             Logger.Info("Attempting to initialize ModLoader...");
-            Logger.Attempt(Loader.Instance.Initialize, true);
+            Logger.Attempt(Loader.Initialize, true);
         }
 
         // Allows us to load assemblies from where the executing assembly is located at.

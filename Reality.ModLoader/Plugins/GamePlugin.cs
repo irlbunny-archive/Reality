@@ -7,8 +7,8 @@ namespace Reality.ModLoader.Plugins
 {
     public abstract class GamePlugin : BasePlugin
     {
-        public IMemory Memory => Loader.Instance.Memory;
-        public ObjectStore Objects => Loader.Instance.Objects;
+        public IMemory Memory => Loader.Memory;
+        public ObjectStore Objects => Loader.Objects;
 
         public virtual bool OnProcessEvent(UObject obj, UObject func, IntPtr parms)
             => true;

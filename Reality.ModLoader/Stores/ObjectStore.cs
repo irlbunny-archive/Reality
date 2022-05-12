@@ -67,7 +67,7 @@ namespace Reality.ModLoader.Stores
             if (offset == -1)
                 return null;
 
-            return new() { BaseAddress = isPtr ? Loader.Instance.Memory.ReadIntPtr(baseAddress, offset) : (baseAddress + offset) };
+            return new() { BaseAddress = isPtr ? Loader.Memory.ReadIntPtr(baseAddress, offset) : (baseAddress + offset) };
         }
 
         public override int ObjectSize => 0;
