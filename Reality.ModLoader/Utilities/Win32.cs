@@ -20,8 +20,8 @@ namespace Reality.ModLoader.Utilities
 
         public static IntPtr LoadLibraryFromResource(string name)
         {
-            var path = Path.Combine(Loader.ResourcesPath, name);
-            ResourceUtil.WriteResourceToFile(name, path);
+            var path = Path.Combine(Bootstrap.ResourcesPath, name);
+            ResourceUtility.WriteResourceToFile(name, path);
             return LoadLibrary(path);
         }
 

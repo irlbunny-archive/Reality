@@ -2,6 +2,7 @@
 using Reality.ModLoader.Stores;
 using Reality.ModLoader.Unreal.Core;
 using System;
+using System.Runtime.InteropServices;
 
 namespace Reality.ModLoader.Unreal.CoreUObject
 {
@@ -10,6 +11,10 @@ namespace Reality.ModLoader.Unreal.CoreUObject
     /// </summary>
     public class UObject : MemoryObject
     {
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        internal delegate void ProcessEventInternalDelegate(IntPtr thisPtr, IntPtr func, IntPtr parms);
+        internal static ProcessEventInternalDelegate ProcessEventInternal;
+
         public ObjectStore Objects => Loader.Instance.Objects;
 
         public IntPtr VTable => ReadIntPtr(0);
@@ -18,6 +23,14 @@ namespace Reality.ModLoader.Unreal.CoreUObject
         public UClass Class => ReadStruct<UClass>(0x10);
         public FName Name => ReadStruct<FName>(0x18, false);
         public UObject Outer => ReadStruct<UObject>(0x20);
+
+        static UObject()
+        {
+            ProcessEventInternal = MemoryUtility.GetInternalFuncFromPattern<ProcessEventInternalDelegate>(
+                "\x40\x55\x56\x57\x41\x54\x41\x55\x41\x56\x41\x57\x48\x81\xEC\x00\x00\x00\x00\x48\x8D\x6C\x24\x00\x48\x89\x9D\x00\x00\x00\x00\x48\x8B\x05\x00\x00\x00\x00\x48\x33\xC5\x48\x89\x85\x00\x00\x00\x00\x48\x63\x41\x0C",
+                "xxxxxxxxxxxxxxx????xxxx?xxx????xxx????xxxxxx????xxxx"
+            );
+        }
 
         public static implicit operator UObject(IntPtr baseAddress)
             => new UObject { BaseAddress = baseAddress };
@@ -151,6 +164,9 @@ namespace Reality.ModLoader.Unreal.CoreUObject
         /// <returns>If found, a MemoryObject. Otherwise, "null" will be returned.</returns>
         public T FindProperty<T>(string fullName, bool withClass = true, bool isPtr = true) where T : MemoryObject, new()
             => Objects.FindProperty<T>(BaseAddress, fullName, withClass, isPtr);
+
+        public void ProcessEvent(UObject func, IntPtr parms)
+            => ProcessEventInternal(BaseAddress, func.BaseAddress, parms);
 
         public override int ObjectSize => 0x28;
     }

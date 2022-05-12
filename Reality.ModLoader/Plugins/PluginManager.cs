@@ -21,7 +21,7 @@ namespace Reality.ModLoader.Plugins
 
         internal static void LoadAll()
         {
-            var assemblyFiles = Directory.GetFiles(Loader.PluginsPath, "*.dll", SearchOption.TopDirectoryOnly);
+            var assemblyFiles = Directory.GetFiles(Bootstrap.PluginsPath, "*.dll", SearchOption.TopDirectoryOnly);
             foreach (var assemblyFile in assemblyFiles)
             {
                 Logger.Info($"Loading \"{assemblyFile}\"...");

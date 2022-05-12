@@ -23,10 +23,16 @@ public:
         return std::string();
     }
 
+    static std::string GetSysDirPath() {
+        char path[MAX_PATH];
+        GetSystemDirectoryA(path, MAX_PATH);
+        return path;
+    }
+
     // FIXME: Hardcoded.
     static std::string GetModulePath() {
-        char path[0x800];
-        GetModuleFileNameA(GetModuleHandleA("Reality.Bootstrap.dll"), path, 0x800);
+        char path[MAX_PATH];
+        GetModuleFileNameA(GetModuleHandleA("Reality.Bootstrap.dll"), path, MAX_PATH);
         return path;
     }
 

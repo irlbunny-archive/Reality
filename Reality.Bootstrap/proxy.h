@@ -1,125 +1,126 @@
 #pragma once
 #include <windows.h>
+#include "util.h"
 
-typedef DWORD (WINAPI* ORIG_FUNCTION_VerFindFileA)(DWORD, LPCSTR, LPCSTR, LPCSTR, LPSTR, PUINT, LPSTR, PUINT);
-ORIG_FUNCTION_VerFindFileA orig_VerFindFileA;
+typedef DWORD (WINAPI* ORIG_VerFindFileA)(DWORD, LPCSTR, LPCSTR, LPCSTR, LPSTR, PUINT, LPSTR, PUINT);
+ORIG_VerFindFileA o_VerFindFileA;
 DWORD WINAPI VerFindFileA(DWORD uFlags, LPCSTR szFileName, LPCSTR szWinDir, LPCSTR szAppDir, LPSTR szCurDir, PUINT puCurDirLen, LPSTR szDestDir, PUINT puDestDirLen) {
-    return (orig_VerFindFileA)(uFlags, szFileName, szWinDir, szAppDir, szCurDir, puCurDirLen, szDestDir, puDestDirLen);
+    return (o_VerFindFileA)(uFlags, szFileName, szWinDir, szAppDir, szCurDir, puCurDirLen, szDestDir, puDestDirLen);
 }
 
-typedef DWORD (WINAPI* ORIG_FUNCTION_VerFindFileW)(DWORD, LPCWSTR, LPCWSTR, LPCWSTR, LPWSTR, PUINT, LPWSTR, PUINT);
-ORIG_FUNCTION_VerFindFileW orig_VerFindFileW;
+typedef DWORD (WINAPI* ORIG_VerFindFileW)(DWORD, LPCWSTR, LPCWSTR, LPCWSTR, LPWSTR, PUINT, LPWSTR, PUINT);
+ORIG_VerFindFileW o_VerFindFileW;
 DWORD WINAPI VerFindFileW(DWORD uFlags, LPCWSTR szFileName, LPCWSTR szWinDir, LPCWSTR szAppDir, LPWSTR szCurDir, PUINT puCurDirLen, LPWSTR szDestDir, PUINT puDestDirLen) {
-    return (orig_VerFindFileW)(uFlags, szFileName, szWinDir, szAppDir, szCurDir, puCurDirLen, szDestDir, puDestDirLen);
+    return (o_VerFindFileW)(uFlags, szFileName, szWinDir, szAppDir, szCurDir, puCurDirLen, szDestDir, puDestDirLen);
 }
 
-typedef DWORD (WINAPI* ORIG_FUNCTION_VerInstallFileA)(DWORD, LPCSTR, LPCSTR, LPCSTR, LPCSTR, LPCSTR, LPSTR, PUINT);
-ORIG_FUNCTION_VerInstallFileA orig_VerInstallFileA;
+typedef DWORD (WINAPI* ORIG_VerInstallFileA)(DWORD, LPCSTR, LPCSTR, LPCSTR, LPCSTR, LPCSTR, LPSTR, PUINT);
+ORIG_VerInstallFileA o_VerInstallFileA;
 DWORD WINAPI VerInstallFileA(DWORD uFlags, LPCSTR szSrcFileName, LPCSTR szDestFileName, LPCSTR szSrcDir, LPCSTR szDestDir, LPCSTR szCurDir, LPSTR szTmpFile, PUINT puTmpFileLen) {
-    return (orig_VerInstallFileA)(uFlags, szSrcFileName, szDestFileName, szSrcDir, szDestDir, szCurDir, szTmpFile, puTmpFileLen);
+    return (o_VerInstallFileA)(uFlags, szSrcFileName, szDestFileName, szSrcDir, szDestDir, szCurDir, szTmpFile, puTmpFileLen);
 }
 
-typedef DWORD (WINAPI* ORIG_FUNCTION_VerInstallFileW)(DWORD, LPCWSTR, LPCWSTR, LPCWSTR, LPCWSTR, LPCWSTR, LPWSTR, PUINT);
-ORIG_FUNCTION_VerInstallFileW orig_VerInstallFileW;
+typedef DWORD (WINAPI* ORIG_VerInstallFileW)(DWORD, LPCWSTR, LPCWSTR, LPCWSTR, LPCWSTR, LPCWSTR, LPWSTR, PUINT);
+ORIG_VerInstallFileW o_VerInstallFileW;
 DWORD WINAPI VerInstallFileW(DWORD uFlags, LPCWSTR szSrcFileName, LPCWSTR szDestFileName, LPCWSTR szSrcDir, LPCWSTR szDestDir, LPCWSTR szCurDir, LPWSTR szTmpFile, PUINT puTmpFileLen) {
-    return (orig_VerInstallFileW)(uFlags, szSrcFileName, szDestFileName, szSrcDir, szDestDir, szCurDir, szTmpFile, puTmpFileLen);
+    return (o_VerInstallFileW)(uFlags, szSrcFileName, szDestFileName, szSrcDir, szDestDir, szCurDir, szTmpFile, puTmpFileLen);
 }
 
-typedef DWORD (WINAPI* ORIG_FUNCTION_GetFileVersionInfoSizeA)(LPCSTR, LPDWORD);
-ORIG_FUNCTION_GetFileVersionInfoSizeA orig_GetFileVersionInfoSizeA;
+typedef DWORD (WINAPI* ORIG_GetFileVersionInfoSizeA)(LPCSTR, LPDWORD);
+ORIG_GetFileVersionInfoSizeA o_GetFileVersionInfoSizeA;
 DWORD WINAPI GetFileVersionInfoSizeA(LPCSTR lptstrFilename, LPDWORD lpdwHandle) {
-    return (orig_GetFileVersionInfoSizeA)(lptstrFilename, lpdwHandle);
+    return (o_GetFileVersionInfoSizeA)(lptstrFilename, lpdwHandle);
 }
 
-typedef DWORD (WINAPI* ORIG_FUNCTION_GetFileVersionInfoSizeW)(LPCWSTR, LPDWORD);
-ORIG_FUNCTION_GetFileVersionInfoSizeW orig_GetFileVersionInfoSizeW;
+typedef DWORD (WINAPI* ORIG_GetFileVersionInfoSizeW)(LPCWSTR, LPDWORD);
+ORIG_GetFileVersionInfoSizeW o_GetFileVersionInfoSizeW;
 DWORD WINAPI GetFileVersionInfoSizeW(LPCWSTR lptstrFilename, LPDWORD lpdwHandle) {
-    return (orig_GetFileVersionInfoSizeW)(lptstrFilename, lpdwHandle);
+    return (o_GetFileVersionInfoSizeW)(lptstrFilename, lpdwHandle);
 }
 
-typedef DWORD (WINAPI* ORIG_FUNCTION_GetFileVersionInfoA)(LPCSTR, DWORD, DWORD, LPVOID);
-ORIG_FUNCTION_GetFileVersionInfoA orig_GetFileVersionInfoA;
+typedef DWORD (WINAPI* ORIG_GetFileVersionInfoA)(LPCSTR, DWORD, DWORD, LPVOID);
+ORIG_GetFileVersionInfoA o_GetFileVersionInfoA;
 BOOL WINAPI GetFileVersionInfoA(LPCSTR lptstrFilename, DWORD dwHandle, DWORD dwLen, LPVOID lpData) {
-    return (orig_GetFileVersionInfoA)(lptstrFilename, dwHandle, dwLen, lpData);
+    return (o_GetFileVersionInfoA)(lptstrFilename, dwHandle, dwLen, lpData);
 }
 
-typedef DWORD (WINAPI* ORIG_FUNCTION_GetFileVersionInfoW)(LPCWSTR, DWORD, DWORD, LPVOID);
-ORIG_FUNCTION_GetFileVersionInfoW orig_GetFileVersionInfoW;
+typedef DWORD (WINAPI* ORIG_GetFileVersionInfoW)(LPCWSTR, DWORD, DWORD, LPVOID);
+ORIG_GetFileVersionInfoW o_GetFileVersionInfoW;
 BOOL WINAPI GetFileVersionInfoW(LPCWSTR lptstrFilename, DWORD dwHandle, DWORD dwLen, LPVOID lpData) {
-    return (orig_GetFileVersionInfoW)(lptstrFilename, dwHandle, dwLen, lpData);
+    return (o_GetFileVersionInfoW)(lptstrFilename, dwHandle, dwLen, lpData);
 }
 
-typedef DWORD (WINAPI* ORIG_FUNCTION_GetFileVersionInfoSizeExA)(DWORD, LPCSTR, LPDWORD);
-ORIG_FUNCTION_GetFileVersionInfoSizeExA orig_GetFileVersionInfoSizeExA;
+typedef DWORD (WINAPI* ORIG_GetFileVersionInfoSizeExA)(DWORD, LPCSTR, LPDWORD);
+ORIG_GetFileVersionInfoSizeExA o_GetFileVersionInfoSizeExA;
 DWORD WINAPI GetFileVersionInfoSizeExA(DWORD dwFlags, LPCSTR lpwstrFilename, LPDWORD lpdwHandle) {
-    return (orig_GetFileVersionInfoSizeExA)(dwFlags, lpwstrFilename, lpdwHandle);
+    return (o_GetFileVersionInfoSizeExA)(dwFlags, lpwstrFilename, lpdwHandle);
 }
 
-typedef DWORD (WINAPI* ORIG_FUNCTION_GetFileVersionInfoSizeExW)(DWORD, LPCWSTR, LPDWORD);
-ORIG_FUNCTION_GetFileVersionInfoSizeExW orig_GetFileVersionInfoSizeExW;
+typedef DWORD (WINAPI* ORIG_GetFileVersionInfoSizeExW)(DWORD, LPCWSTR, LPDWORD);
+ORIG_GetFileVersionInfoSizeExW o_GetFileVersionInfoSizeExW;
 DWORD WINAPI GetFileVersionInfoSizeExW(DWORD dwFlags, LPCWSTR lpwstrFilename, LPDWORD lpdwHandle) {
-    return (orig_GetFileVersionInfoSizeExW)(dwFlags, lpwstrFilename, lpdwHandle);
+    return (o_GetFileVersionInfoSizeExW)(dwFlags, lpwstrFilename, lpdwHandle);
 }
 
-typedef DWORD (WINAPI* ORIG_FUNCTION_GetFileVersionInfoExA)(DWORD, LPCSTR, DWORD, DWORD, LPVOID);
-ORIG_FUNCTION_GetFileVersionInfoExA orig_GetFileVersionInfoExA;
+typedef DWORD (WINAPI* ORIG_GetFileVersionInfoExA)(DWORD, LPCSTR, DWORD, DWORD, LPVOID);
+ORIG_GetFileVersionInfoExA o_GetFileVersionInfoExA;
 BOOL WINAPI GetFileVersionInfoExA(DWORD dwFlags, LPCSTR lpwstrFilename, DWORD dwHandle, DWORD dwLen, LPVOID lpData) {
-    return (orig_GetFileVersionInfoExA)(dwFlags, lpwstrFilename, dwHandle, dwLen, lpData);
+    return (o_GetFileVersionInfoExA)(dwFlags, lpwstrFilename, dwHandle, dwLen, lpData);
 }
 
-typedef DWORD (WINAPI* ORIG_FUNCTION_GetFileVersionInfoExW)(DWORD, LPCWSTR, DWORD, DWORD, LPVOID);
-ORIG_FUNCTION_GetFileVersionInfoExW orig_GetFileVersionInfoExW;
+typedef DWORD (WINAPI* ORIG_GetFileVersionInfoExW)(DWORD, LPCWSTR, DWORD, DWORD, LPVOID);
+ORIG_GetFileVersionInfoExW o_GetFileVersionInfoExW;
 BOOL WINAPI GetFileVersionInfoExW(DWORD dwFlags, LPCWSTR lpwstrFilename, DWORD dwHandle, DWORD dwLen, LPVOID lpData) {
-    return (orig_GetFileVersionInfoExW)(dwFlags, lpwstrFilename, dwHandle, dwLen, lpData);
+    return (o_GetFileVersionInfoExW)(dwFlags, lpwstrFilename, dwHandle, dwLen, lpData);
 }
 
-typedef DWORD (WINAPI* ORIG_FUNCTION_VerLanguageNameA)(DWORD, LPSTR, DWORD);
-ORIG_FUNCTION_VerLanguageNameA orig_VerLanguageNameA;
+typedef DWORD (WINAPI* ORIG_VerLanguageNameA)(DWORD, LPSTR, DWORD);
+ORIG_VerLanguageNameA o_VerLanguageNameA;
 DWORD WINAPI VerLanguageNameA(DWORD wLang, LPSTR szLang, DWORD cchLang) {
-    return (orig_VerLanguageNameA)(wLang, szLang, cchLang);
+    return (o_VerLanguageNameA)(wLang, szLang, cchLang);
 }
 
-typedef DWORD (WINAPI* ORIG_FUNCTION_VerLanguageNameW)(DWORD, LPWSTR, DWORD);
-ORIG_FUNCTION_VerLanguageNameW orig_VerLanguageNameW;
+typedef DWORD (WINAPI* ORIG_VerLanguageNameW)(DWORD, LPWSTR, DWORD);
+ORIG_VerLanguageNameW o_VerLanguageNameW;
 DWORD WINAPI VerLanguageNameW(DWORD wLang, LPWSTR szLang, DWORD cchLang) {
-    return (orig_VerLanguageNameW)(wLang, szLang, cchLang);
+    return (o_VerLanguageNameW)(wLang, szLang, cchLang);
 }
 
-typedef DWORD (WINAPI* ORIG_FUNCTION_VerQueryValueA)(LPCVOID, LPCSTR, LPVOID*, PUINT);
-ORIG_FUNCTION_VerQueryValueA orig_VerQueryValueA;
+typedef DWORD (WINAPI* ORIG_VerQueryValueA)(LPCVOID, LPCSTR, LPVOID*, PUINT);
+ORIG_VerQueryValueA o_VerQueryValueA;
 BOOL WINAPI VerQueryValueA(LPCVOID pBlock, LPCSTR lpSubBlock, LPVOID* lplpBuffer, PUINT puLen) {
-    return (orig_VerQueryValueA)(pBlock, lpSubBlock, lplpBuffer, puLen);
+    return (o_VerQueryValueA)(pBlock, lpSubBlock, lplpBuffer, puLen);
 }
 
-typedef DWORD (WINAPI* ORIG_FUNCTION_VerQueryValueW)(LPCVOID, LPCWSTR, LPVOID*, PUINT);
-ORIG_FUNCTION_VerQueryValueW orig_VerQueryValueW;
+typedef DWORD (WINAPI* ORIG_VerQueryValueW)(LPCVOID, LPCWSTR, LPVOID*, PUINT);
+ORIG_VerQueryValueW o_VerQueryValueW;
 BOOL WINAPI VerQueryValueW(LPCVOID pBlock, LPCWSTR lpSubBlock, LPVOID* lplpBuffer, PUINT puLen) {
-    return (orig_VerQueryValueW)(pBlock, lpSubBlock, lplpBuffer, puLen);
+    return (o_VerQueryValueW)(pBlock, lpSubBlock, lplpBuffer, puLen);
 }
 
-typedef void (WINAPI* ORIG_FUNCTION_GetFileVersionInfoByHandle)();
-ORIG_FUNCTION_GetFileVersionInfoByHandle orig_GetFileVersionInfoByHandle;
+typedef void (WINAPI* ORIG_GetFileVersionInfoByHandle)();
+ORIG_GetFileVersionInfoByHandle o_GetFileVersionInfoByHandle;
 void WINAPI GetFileVersionInfoByHandle() {
-    (orig_GetFileVersionInfoByHandle)();
+    (o_GetFileVersionInfoByHandle)();
 }
 
 void InitProxy() {
-	HMODULE hOriginalDll = LoadLibrary(L"C:\\Windows\\system32\\version.dll");
-	orig_VerFindFileA = (ORIG_FUNCTION_VerFindFileA) GetProcAddress(hOriginalDll, "VerFindFileA");
-	orig_VerFindFileW = (ORIG_FUNCTION_VerFindFileW) GetProcAddress(hOriginalDll, "VerFindFileW");
-	orig_VerInstallFileA = (ORIG_FUNCTION_VerInstallFileA) GetProcAddress(hOriginalDll, "VerInstallFileA");
-	orig_VerInstallFileW = (ORIG_FUNCTION_VerInstallFileW) GetProcAddress(hOriginalDll, "VerInstallFileW");
-	orig_GetFileVersionInfoA = (ORIG_FUNCTION_GetFileVersionInfoA) GetProcAddress(hOriginalDll, "GetFileVersionInfoA");
-	orig_GetFileVersionInfoW = (ORIG_FUNCTION_GetFileVersionInfoW) GetProcAddress(hOriginalDll, "GetFileVersionInfoW");
-	orig_GetFileVersionInfoSizeA = (ORIG_FUNCTION_GetFileVersionInfoSizeA) GetProcAddress(hOriginalDll, "GetFileVersionInfoSizeA");
-	orig_GetFileVersionInfoSizeW = (ORIG_FUNCTION_GetFileVersionInfoSizeW) GetProcAddress(hOriginalDll, "GetFileVersionInfoSizeW");
-	orig_GetFileVersionInfoExA = (ORIG_FUNCTION_GetFileVersionInfoExA) GetProcAddress(hOriginalDll, "GetFileVersionInfoExA");
-	orig_GetFileVersionInfoExW = (ORIG_FUNCTION_GetFileVersionInfoExW) GetProcAddress(hOriginalDll, "GetFileVersionInfoExW");
-	orig_GetFileVersionInfoSizeExA = (ORIG_FUNCTION_GetFileVersionInfoSizeExA) GetProcAddress(hOriginalDll, "GetFileVersionInfoSizeExA");
-	orig_GetFileVersionInfoSizeExW = (ORIG_FUNCTION_GetFileVersionInfoSizeExW) GetProcAddress(hOriginalDll, "GetFileVersionInfoSizeExW");
-	orig_VerLanguageNameA = (ORIG_FUNCTION_VerLanguageNameA) GetProcAddress(hOriginalDll, "VerLanguageNameA");
-	orig_VerLanguageNameW = (ORIG_FUNCTION_VerLanguageNameW) GetProcAddress(hOriginalDll, "VerLanguageNameW");
-	orig_VerQueryValueA = (ORIG_FUNCTION_VerQueryValueA) GetProcAddress(hOriginalDll, "VerQueryValueA");
-	orig_VerQueryValueW = (ORIG_FUNCTION_VerQueryValueW) GetProcAddress(hOriginalDll, "VerQueryValueW");
-	orig_GetFileVersionInfoByHandle = (ORIG_FUNCTION_GetFileVersionInfoByHandle) GetProcAddress(hOriginalDll, "GetFileVersionInfoByHandle");
+	HMODULE h_OriginalLibrary = LoadLibraryA(Util::GetConcatPath(Util::GetSysDirPath(), "version.dll").c_str());
+	o_VerFindFileA = (ORIG_VerFindFileA) GetProcAddress(h_OriginalLibrary, "VerFindFileA");
+	o_VerFindFileW = (ORIG_VerFindFileW) GetProcAddress(h_OriginalLibrary, "VerFindFileW");
+	o_VerInstallFileA = (ORIG_VerInstallFileA) GetProcAddress(h_OriginalLibrary, "VerInstallFileA");
+	o_VerInstallFileW = (ORIG_VerInstallFileW) GetProcAddress(h_OriginalLibrary, "VerInstallFileW");
+	o_GetFileVersionInfoA = (ORIG_GetFileVersionInfoA) GetProcAddress(h_OriginalLibrary, "GetFileVersionInfoA");
+	o_GetFileVersionInfoW = (ORIG_GetFileVersionInfoW) GetProcAddress(h_OriginalLibrary, "GetFileVersionInfoW");
+	o_GetFileVersionInfoSizeA = (ORIG_GetFileVersionInfoSizeA) GetProcAddress(h_OriginalLibrary, "GetFileVersionInfoSizeA");
+	o_GetFileVersionInfoSizeW = (ORIG_GetFileVersionInfoSizeW) GetProcAddress(h_OriginalLibrary, "GetFileVersionInfoSizeW");
+	o_GetFileVersionInfoExA = (ORIG_GetFileVersionInfoExA) GetProcAddress(h_OriginalLibrary, "GetFileVersionInfoExA");
+	o_GetFileVersionInfoExW = (ORIG_GetFileVersionInfoExW) GetProcAddress(h_OriginalLibrary, "GetFileVersionInfoExW");
+	o_GetFileVersionInfoSizeExA = (ORIG_GetFileVersionInfoSizeExA) GetProcAddress(h_OriginalLibrary, "GetFileVersionInfoSizeExA");
+	o_GetFileVersionInfoSizeExW = (ORIG_GetFileVersionInfoSizeExW) GetProcAddress(h_OriginalLibrary, "GetFileVersionInfoSizeExW");
+	o_VerLanguageNameA = (ORIG_VerLanguageNameA) GetProcAddress(h_OriginalLibrary, "VerLanguageNameA");
+	o_VerLanguageNameW = (ORIG_VerLanguageNameW) GetProcAddress(h_OriginalLibrary, "VerLanguageNameW");
+	o_VerQueryValueA = (ORIG_VerQueryValueA) GetProcAddress(h_OriginalLibrary, "VerQueryValueA");
+	o_VerQueryValueW = (ORIG_VerQueryValueW) GetProcAddress(h_OriginalLibrary, "VerQueryValueW");
+	o_GetFileVersionInfoByHandle = (ORIG_GetFileVersionInfoByHandle) GetProcAddress(h_OriginalLibrary, "GetFileVersionInfoByHandle");
 }

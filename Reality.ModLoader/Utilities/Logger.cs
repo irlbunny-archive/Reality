@@ -66,7 +66,8 @@ namespace Reality.ModLoader.Utilities
         /// then it logs the error.
         /// </summary>
         /// <param name="action">The action to attempt.</param>
-        public static void Attempt(Action action)
+        /// <param name="exitAfterException">If set to true, the program will be closed after an exception occurs.</param>
+        public static void Attempt(Action action, bool exitAfterException = false)
         {
             try
             {
@@ -75,6 +76,9 @@ namespace Reality.ModLoader.Utilities
             catch (Exception e)
             {
                 Error(e.ToString(), "Exception");
+
+                if (exitAfterException)
+                    Environment.Exit(-1);
             }
         }
     }

@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Reality.ModLoader.Resources
 {
-    internal static class ResourceUtil
+    internal static class ResourceUtility
     {
         public static void WriteResourceToFile(string name, string path)
         {

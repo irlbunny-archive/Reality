@@ -39,20 +39,17 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="Bootstrap.cs" />
     <Compile Include="Memory\IMemory.cs" />
     <Compile Include="Memory\InternalMemory.cs" />
     <Compile Include="Memory\MemoryObject.cs" />
-    <Compile Include="Memory\MemoryUtil.cs" />
-    <Compile Include="InternalHooks.cs" />
+    <Compile Include="Memory\MemoryUtility.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\ResourceUtil.cs" />
+    <Compile Include="Resources\ResourceUtility.cs" />
     <Compile Include="Stores\FixedObjectStore.cs" />
     <Compile Include="Stores\ObjectStore.cs" />
     <Compile Include="Unreal\CoreUObject\FVector.cs" />
