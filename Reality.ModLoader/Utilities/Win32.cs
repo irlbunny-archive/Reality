@@ -1,6 +1,4 @@
-﻿using Reality.ModLoader.Resources;
-using System;
-using System.IO;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace Reality.ModLoader.Utilities
@@ -17,13 +15,6 @@ namespace Reality.ModLoader.Utilities
 
         [DllImport("kernel32", SetLastError = true, CharSet = CharSet.Ansi)]
         public static extern IntPtr LoadLibrary([MarshalAs(UnmanagedType.LPStr)] string lpFileName);
-
-        public static IntPtr LoadLibraryFromResource(string name)
-        {
-            var path = Path.Combine(Bootstrap.ResourcesPath, name);
-            ResourceUtility.WriteResourceToFile(name, path);
-            return LoadLibrary(path);
-        }
 
         [DllImport("kernel32", CharSet = CharSet.Ansi, ExactSpelling = true, SetLastError = true)]
         public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);

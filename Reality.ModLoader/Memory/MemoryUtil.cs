@@ -5,7 +5,7 @@ using static Reality.ModLoader.Utilities.Win32;
 
 namespace Reality.ModLoader.Memory
 {
-    public static class MemoryUtility
+    public static class MemoryUtil
     {
         public static IntPtr FindPattern(string pattern, string mask)
         {

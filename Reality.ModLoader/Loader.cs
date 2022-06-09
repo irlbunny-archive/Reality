@@ -15,16 +15,16 @@ namespace Reality.ModLoader
 {
     public static class Loader
     {
-        public static bool IsInitialized { get; private set; }
-
-        public static List<GamePlugin> LoadedPlugins { get; } = new();
+        public static bool Initialized { get; private set; }
 
         public static IMemory Memory { get; private set; }
         public static ObjectStore Objects { get; private set; }
 
+        public static List<UnrealPlugin> LoadedPlugins { get; } = new();
+
         public static void ProcessEventInternalHook(IntPtr thisPtr, IntPtr func, IntPtr parms)
         {
-            var processEvent = true;
+            var result = true;
             if (thisPtr != IntPtr.Zero && func != IntPtr.Zero)
             {
                 var thisObj = (UObject) thisPtr;
@@ -34,35 +34,35 @@ namespace Reality.ModLoader
                 {
                     if (!plugin.OnProcessEvent(thisObj, funcObj, parms))
                     {
-                        processEvent = false;
+                        result = false;
                         break;
                     }
                 }
             }
 
-            if (processEvent)
+            if (result)
                 UObject.ProcessEventInternal(thisPtr, func, parms);
         }
 
-        internal static void Initialize()
+        public static void Initialize()
         {
-            if (IsInitialized)
+            if (Initialized)
                 return;
 
             Memory = new InternalMemory();
 
             LoadPlugins();
 
-            var objectsOffset = MemoryUtility.FindPattern(
+            var objectsOffset = MemoryUtil.FindPattern(
                 "\x48\x8D\x0D\x00\x00\x00\x00\xE8\x00\x00\x00\x00\xE8\x00\x00\x00\x00\xE8\x00\x00\x00\x00\x48\x8B\xD6",
                 "xxx????x????x????x????xxx"
             );
-            Objects = new FixedObjectStore(MemoryUtility.GetAddressFromOffset(objectsOffset, 7, 3));
+            Objects = new FixedObjectStore(MemoryUtil.GetAddressFromOffset(objectsOffset, 7, 3));
 
             MinHook.CreateHook(Marshal.GetFunctionPointerForDelegate(UObject.ProcessEventInternal), ProcessEventInternalHook, out UObject.ProcessEventInternal);
             MinHook.EnableAllHooks();
 
-            IsInitialized = true;
+            Initialized = true;
         }
 
         private static void LoadPlugins()
@@ -73,11 +73,11 @@ namespace Reality.ModLoader
                 Logger.Info($"Loading \"{fileName}\"...");
 
                 var types = Assembly.LoadFrom(fileName).GetTypes()
-                    .Where(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(typeof(GamePlugin)));
+                    .Where(x => x.IsClass && !x.IsAbstract && x.IsSubclassOf(typeof(UnrealPlugin)));
                 foreach (var type in types)
                 {
                     var plugin = (BasePlugin) Activator.CreateInstance(type);
-                    if (plugin is GamePlugin gamePlugin)
+                    if (plugin is UnrealPlugin gamePlugin)
                         LoadedPlugins.Add(gamePlugin);
 
                     Logger.Info($"Loaded plugin: \"{plugin.Name}\" (v{plugin.Version}) by \"{plugin.Author}\"");

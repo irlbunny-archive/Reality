@@ -1,4 +1,5 @@
 ﻿using Reality.ModLoader.GC;
+using Reality.ModLoader.Utilities;
 using System;
 using System.Runtime.InteropServices;
 using static Reality.ModLoader.Utilities.Win32;
@@ -43,7 +44,7 @@ namespace Reality.ModLoader.Hooking
         static MinHook()
         {
             var platform = IntPtr.Size == 4 ? "x86" : "x64";
-            _handle = LoadLibraryFromResource($"MinHook.{platform}.dll");
+            _handle = ResourceUtil.LoadLibrary($"MinHook.{platform}.dll");
             if (_handle == IntPtr.Zero)
                 throw new Exception($"Failed to load MinHook for {platform}.");
 

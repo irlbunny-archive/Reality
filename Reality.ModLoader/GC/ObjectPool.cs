@@ -3,7 +3,7 @@
 namespace Reality.ModLoader.GC
 {
     /// <summary>
-    /// Stores a bunch of objects, useful for avoiding garbage collection (especially delegates).
+    /// Stores a collection of objects, useful for avoiding garbage collection (especially delegates).
     /// </summary>
     public static class ObjectPool
     {

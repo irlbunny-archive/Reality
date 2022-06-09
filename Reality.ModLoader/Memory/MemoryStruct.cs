@@ -14,7 +14,7 @@ namespace Reality.ModLoader.Memory
             _baseAddress = FMemory.MallocZero(ObjectSize);
         }
 
-        public override void OnBaseAddressChanged(IntPtr baseAddress)
+        public override void OnBaseAddressUpdated(IntPtr baseAddress)
         {
             if (_baseAddress != IntPtr.Zero && FMemory.InternalAllocations.Contains(_baseAddress))
                 FMemory.Free(_baseAddress);

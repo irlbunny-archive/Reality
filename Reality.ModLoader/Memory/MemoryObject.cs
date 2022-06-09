@@ -16,7 +16,7 @@ namespace Reality.ModLoader.Memory
             get => _baseAddress;
             set
             {
-                OnBaseAddressChanged(value);
+                OnBaseAddressUpdated(value);
                 _baseAddress = value;
             }
         }
@@ -96,7 +96,7 @@ namespace Reality.ModLoader.Memory
                 Memory.WriteBytes(address, 0, Memory.ReadBytes(BaseAddress, 0, ObjectSize));
         }
 
-        public virtual void OnBaseAddressChanged(IntPtr baseAddress)
+        public virtual void OnBaseAddressUpdated(IntPtr baseAddress)
         { }
 
         public abstract int ObjectSize { get; }

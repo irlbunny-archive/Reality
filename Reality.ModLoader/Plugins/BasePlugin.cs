@@ -3,7 +3,7 @@
     /// <summary>
     /// Do *not* inherit this class, it is used for internal purposes.
     /// Your plugin will *not* load if you inherit this class.
-    /// Instead, use <seealso cref="GamePlugin"/>.
+    /// Instead, use <seealso cref="UnrealPlugin"/>.
     /// </summary>
     public abstract class BasePlugin
     {

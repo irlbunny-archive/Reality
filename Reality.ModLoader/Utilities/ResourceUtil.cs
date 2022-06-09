@@ -1,12 +1,13 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace Reality.ModLoader.Resources
+namespace Reality.ModLoader.Utilities
 {
-    internal static class ResourceUtility
+    internal static class ResourceUtil
     {
-        public static void WriteResourceToFile(string name, string path)
+        public static void Extract(string name, string path)
         {
             name = Assembly.GetExecutingAssembly().GetManifestResourceNames().Where(x => x.Contains(name)).FirstOrDefault();
 
@@ -15,6 +16,13 @@ namespace Reality.ModLoader.Resources
             {
                 stream.CopyTo(file);
             }
+        }
+
+        public static IntPtr LoadLibrary(string name)
+        {
+            var path = Path.Combine(Bootstrap.ResourcesPath, name);
+            Extract(name, path);
+            return Win32.LoadLibrary(path);
         }
     }
 }

@@ -5,7 +5,7 @@ using System;
 
 namespace Reality.ModLoader.Plugins
 {
-    public abstract class GamePlugin : BasePlugin
+    public abstract class UnrealPlugin : BasePlugin
     {
         public IMemory Memory => Loader.Memory;
         public ObjectStore Objects => Loader.Objects;

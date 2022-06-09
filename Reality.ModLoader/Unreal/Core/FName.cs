@@ -25,7 +25,7 @@ namespace Reality.ModLoader.Unreal.Core
 
         static FName()
         {
-            ToStringInternal = MemoryUtility.GetInternalFuncFromPattern<ToStringInternalDelegate>("\x48\x89\x5C\x24\x08\x57\x48\x83\xEC\x00\x83\x79\x04\x00\x48\x8B\xDA\x48\x8B\xF9\x75\x00", "xxxxxxxxx?xxxxxxxxxxx?");
+            ToStringInternal = MemoryUtil.GetInternalFuncFromPattern<ToStringInternalDelegate>("\x48\x89\x5C\x24\x08\x57\x48\x83\xEC\x00\x83\x79\x04\x00\x48\x8B\xDA\x48\x8B\xF9\x75\x00", "xxxxxxxxx?xxxxxxxxxxx?");
         }
 
         public override int ObjectSize => 8;
