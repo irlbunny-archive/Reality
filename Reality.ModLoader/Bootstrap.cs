@@ -1,6 +1,5 @@
 ﻿using Reality.ModLoader.Utilities;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -8,23 +7,16 @@ namespace Reality.ModLoader
 {
     public static class Bootstrap
     {
-        public static string Version => FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
-
-        public static string DataPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Reality");
-        public static string ResourcesPath => Path.Combine(DataPath, "Resources");
-        public static string PluginsPath => Path.Combine(DataPath, "Plugins");
-        public static string LogsPath => Path.Combine(DataPath, "Logs");
-
         public static void Main(string[] args)
         {
             // Create all directories.
-            Directory.CreateDirectory(DataPath);
-            Directory.CreateDirectory(ResourcesPath);
-            Directory.CreateDirectory(PluginsPath);
-            Directory.CreateDirectory(LogsPath);
+            Directory.CreateDirectory(Loader.DataPath);
+            Directory.CreateDirectory(Loader.ResourcesPath);
+            Directory.CreateDirectory(Loader.PluginsPath);
+            Directory.CreateDirectory(Loader.LogsPath);
 
-            Logger.FilePath = Path.Combine(LogsPath, $"{DateTime.Now:MM-dd-yyyy_HH-mm-ss}.txt");
-            Logger.Info($"Reality (v{Version}), made with <3 by Kaitlyn.");
+            Logger.FilePath = Path.Combine(Loader.LogsPath, $"{DateTime.Now:MM-dd-yyyy_HH-mm-ss}.txt");
+            Logger.Info($"Reality (v{Loader.Version}), made with <3 by Kaitlyn.");
             Logger.Info("Consider supporting me on Patreon! https://www.patreon.com/join/ItsKaitlyn03");
             Logger.Info("Attempting to initialize ModLoader...");
             Logger.Attempt(Loader.Initialize, true);

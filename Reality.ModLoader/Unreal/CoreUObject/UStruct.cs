@@ -2,6 +2,6 @@
 {
     public class UStruct : UField
     {
-        public UStruct SuperField => ReadStruct<UStruct>(0x30);
+        public UStruct SuperField => ReadStruct<UStruct>(Configuration.GetOffsetFromName("UStruct_SuperField"));
     }
 }

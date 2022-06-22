@@ -9,24 +9,34 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Reality.Bootstrap", "Realit
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|Win32 = Debug|Win32
 		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
 		Release|Win32 = Release|Win32
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4956FB48-7117-408B-992B-574B4BE48CD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4956FB48-7117-408B-992B-574B4BE48CD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4956FB48-7117-408B-992B-574B4BE48CD9}.Debug|Win32.ActiveCfg = Debug|Any CPU
 		{4956FB48-7117-408B-992B-574B4BE48CD9}.Debug|Win32.Build.0 = Debug|Any CPU
 		{4956FB48-7117-408B-992B-574B4BE48CD9}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{4956FB48-7117-408B-992B-574B4BE48CD9}.Debug|x64.Build.0 = Debug|Any CPU
+		{4956FB48-7117-408B-992B-574B4BE48CD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4956FB48-7117-408B-992B-574B4BE48CD9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4956FB48-7117-408B-992B-574B4BE48CD9}.Release|Win32.ActiveCfg = Release|Any CPU
 		{4956FB48-7117-408B-992B-574B4BE48CD9}.Release|Win32.Build.0 = Release|Any CPU
 		{4956FB48-7117-408B-992B-574B4BE48CD9}.Release|x64.ActiveCfg = Release|Any CPU
 		{4956FB48-7117-408B-992B-574B4BE48CD9}.Release|x64.Build.0 = Release|Any CPU
+		{4F8BDABD-4CC2-42D6-B35F-C85277D126F4}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{4F8BDABD-4CC2-42D6-B35F-C85277D126F4}.Debug|Any CPU.Build.0 = Debug|x64
 		{4F8BDABD-4CC2-42D6-B35F-C85277D126F4}.Debug|Win32.ActiveCfg = Debug|Win32
 		{4F8BDABD-4CC2-42D6-B35F-C85277D126F4}.Debug|Win32.Build.0 = Debug|Win32
 		{4F8BDABD-4CC2-42D6-B35F-C85277D126F4}.Debug|x64.ActiveCfg = Debug|x64
 		{4F8BDABD-4CC2-42D6-B35F-C85277D126F4}.Debug|x64.Build.0 = Debug|x64
+		{4F8BDABD-4CC2-42D6-B35F-C85277D126F4}.Release|Any CPU.ActiveCfg = Release|x64
+		{4F8BDABD-4CC2-42D6-B35F-C85277D126F4}.Release|Any CPU.Build.0 = Release|x64
 		{4F8BDABD-4CC2-42D6-B35F-C85277D126F4}.Release|Win32.ActiveCfg = Release|Win32
 		{4F8BDABD-4CC2-42D6-B35F-C85277D126F4}.Release|Win32.Build.0 = Release|Win32
 		{4F8BDABD-4CC2-42D6-B35F-C85277D126F4}.Release|x64.ActiveCfg = Release|x64

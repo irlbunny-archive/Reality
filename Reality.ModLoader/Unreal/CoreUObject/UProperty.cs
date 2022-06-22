@@ -2,6 +2,6 @@
 {
     public class UProperty : UField
     {
-        public int Offset => ReadInt32(0x44);
+        public int Offset => ReadInt32(Configuration.GetOffsetFromName("UProperty_Offset"));
     }
 }

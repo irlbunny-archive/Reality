@@ -10,6 +10,9 @@ namespace Reality.ModLoader.Plugins
         public IMemory Memory => Loader.Memory;
         public ObjectStore Objects => Loader.Objects;
 
+        public virtual void OnGameInitialized()
+        { }
+
         public virtual bool OnProcessEvent(UObject obj, UObject func, IntPtr parms)
             => true;
     }

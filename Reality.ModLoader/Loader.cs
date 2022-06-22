@@ -6,16 +6,24 @@ using Reality.ModLoader.Unreal.CoreUObject;
 using Reality.ModLoader.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 
 namespace Reality.ModLoader
 {
     public static class Loader
     {
         public static bool Initialized { get; private set; }
+        public static bool GameInitialized { get; private set; }
+
+        public static string Version => FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
+
+        public static string DataPath => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Reality");
+        public static string ResourcesPath => Path.Combine(DataPath, "Resources");
+        public static string PluginsPath => Path.Combine(DataPath, "Plugins");
+        public static string LogsPath => Path.Combine(DataPath, "Logs");
 
         public static IMemory Memory { get; private set; }
         public static ObjectStore Objects { get; private set; }
@@ -24,6 +32,16 @@ namespace Reality.ModLoader
 
         public static void ProcessEventInternalHook(IntPtr thisPtr, IntPtr func, IntPtr parms)
         {
+            if (!GameInitialized)
+            {
+                foreach (var plugin in LoadedPlugins)
+                {
+                    plugin.OnGameInitialized();
+                }
+
+                GameInitialized = true;
+            }
+
             var result = true;
             if (thisPtr != IntPtr.Zero && func != IntPtr.Zero)
             {
@@ -53,13 +71,9 @@ namespace Reality.ModLoader
 
             LoadPlugins();
 
-            var objectsOffset = MemoryUtil.FindPattern(
-                "\x48\x8D\x0D\x00\x00\x00\x00\xE8\x00\x00\x00\x00\xE8\x00\x00\x00\x00\xE8\x00\x00\x00\x00\x48\x8B\xD6",
-                "xxx????x????x????x????xxx"
-            );
-            Objects = new FixedObjectStore(MemoryUtil.GetAddressFromOffset(objectsOffset, 7, 3));
+            Objects = new FixedObjectStore(Configuration.GetAddressFromName("GObjects"));
 
-            MinHook.CreateHook(Marshal.GetFunctionPointerForDelegate(UObject.ProcessEventInternal), ProcessEventInternalHook, out UObject.ProcessEventInternal);
+            MinHook.CreateHook(UObject.ProcessEventInternal, ProcessEventInternalHook, out UObject.ProcessEventInternal);
             MinHook.EnableAllHooks();
 
             Initialized = true;
@@ -67,7 +81,7 @@ namespace Reality.ModLoader
 
         private static void LoadPlugins()
         {
-            var fileNames = Directory.GetFiles(Bootstrap.PluginsPath, "*.dll", SearchOption.TopDirectoryOnly);
+            var fileNames = Directory.GetFiles(PluginsPath, "*.dll", SearchOption.TopDirectoryOnly);
             foreach (var fileName in fileNames)
             {
                 Logger.Info($"Loading \"{fileName}\"...");

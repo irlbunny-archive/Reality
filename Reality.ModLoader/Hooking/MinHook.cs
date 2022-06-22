@@ -1,6 +1,7 @@
 ﻿using Reality.ModLoader.GC;
 using Reality.ModLoader.Utilities;
 using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using static Reality.ModLoader.Utilities.Win32;
 
@@ -44,7 +45,7 @@ namespace Reality.ModLoader.Hooking
         static MinHook()
         {
             var platform = IntPtr.Size == 4 ? "x86" : "x64";
-            _handle = ResourceUtil.LoadLibrary($"MinHook.{platform}.dll");
+            _handle = ResourceUtil.LoadLibrary(Assembly.GetExecutingAssembly(), $"MinHook.{platform}.dll");
             if (_handle == IntPtr.Zero)
                 throw new Exception($"Failed to load MinHook for {platform}.");
 
@@ -73,6 +74,9 @@ namespace Reality.ModLoader.Hooking
 
             return status;
         }
+
+        public static MH_STATUS CreateHook<T>(Delegate target, T detour, out T trampoline) where T : Delegate
+            => CreateHook(Marshal.GetFunctionPointerForDelegate(target), detour, out trampoline);
 
         public static MH_STATUS EnableHook(IntPtr target)
             => MH_EnableHook(target);

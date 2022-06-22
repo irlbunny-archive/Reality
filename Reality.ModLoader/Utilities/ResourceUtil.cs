@@ -5,23 +5,23 @@ using System.Reflection;
 
 namespace Reality.ModLoader.Utilities
 {
-    internal static class ResourceUtil
+    public static class ResourceUtil
     {
-        public static void Extract(string name, string path)
+        public static void Extract(Assembly assembly, string name, string path)
         {
-            name = Assembly.GetExecutingAssembly().GetManifestResourceNames().Where(x => x.Contains(name)).FirstOrDefault();
+            name = assembly.GetManifestResourceNames().Where(x => x.Contains(name)).FirstOrDefault();
 
-            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(name))
+            using (var stream = assembly.GetManifestResourceStream(name))
             using (var file = new FileStream(path, FileMode.Create, FileAccess.Write))
             {
                 stream.CopyTo(file);
             }
         }
 
-        public static IntPtr LoadLibrary(string name)
+        public static IntPtr LoadLibrary(Assembly assembly, string name)
         {
-            var path = Path.Combine(Bootstrap.ResourcesPath, name);
-            Extract(name, path);
+            var path = Path.Combine(Loader.ResourcesPath, name);
+            Extract(assembly, name, path);
             return Win32.LoadLibrary(path);
         }
     }
