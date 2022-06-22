@@ -7,4 +7,7 @@
 A highly abstract and modular Unreal Engine mod loader for the 21st century, written in C#.
 
 # Guide
-Coming soon.
+- Go to `Binaries/Win64` in your game folder, create a new folder inside `Win64` called `Reality`.
+- Download the [latest release of Reality](https://github.com/ItsKaitlyn03/Reality/releases) and place the contents of the ZIP into `Win64`.
+- Download your respective game configuration or make your own, and place it inside the newly created `Reality` folder.
+- Launch your game and enjoy, you're now ready to create and use plugins/mods for Reality!
