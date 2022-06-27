@@ -21,8 +21,13 @@ namespace Reality.ModLoader.Utilities
         {
             Console.WriteLine(value);
 
-            if (!string.IsNullOrEmpty(FilePath))
-                File.AppendAllText(FilePath, $"{value}\r\n");
+            try
+            {
+                if (!string.IsNullOrEmpty(FilePath))
+                    File.AppendAllText(FilePath, $"{value}\r\n");
+            }
+            catch
+            { }
         }
 
         private static void LogInternal(ConsoleColor color, string type, string message, string memberName)

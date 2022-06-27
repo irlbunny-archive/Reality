@@ -7,7 +7,7 @@ namespace Reality.ModLoader.Unreal.Core
     /// <summary>
     /// Represents a string in UE4, offsets should usually never change here.
     /// </summary>
-    public class FString : MemoryStruct
+    public class FString : MemoryStruct, IDisposable
     {
         public IntPtr Data
         {
@@ -59,6 +59,13 @@ namespace Reality.ModLoader.Unreal.Core
             : base()
         {
             Value = value;
+        }
+
+        public void Dispose()
+        {
+            Value = string.Empty; // We should probably free instead, but oh well.
+            Count = 0;
+            Max = 0;
         }
 
         public override int ObjectSize => IntPtr.Size + 8;
